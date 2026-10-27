@@ -16,6 +16,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
 import { Route as MoviesIndexRouteImport } from './routes/movies.index'
 import { Route as MoviesSlugRouteImport } from './routes/movies.$slug'
@@ -56,6 +57,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBookingsRoute = AuthenticatedBookingsRouteImport.update({
   id: '/bookings',
   path: '/bookings',
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bookings': typeof AuthenticatedBookingsRoute
   '/movies/$slug': typeof MoviesSlugRoute
   '/movies/': typeof MoviesIndexRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bookings': typeof AuthenticatedBookingsRoute
   '/movies/$slug': typeof MoviesSlugRoute
   '/movies': typeof MoviesIndexRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/movies/$slug': typeof MoviesSlugRoute
   '/movies/': typeof MoviesIndexRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/login'
     | '/register'
+    | '/admin'
     | '/bookings'
     | '/movies/$slug'
     | '/movies/'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/login'
     | '/register'
+    | '/admin'
     | '/bookings'
     | '/movies/$slug'
     | '/movies'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/login'
     | '/register'
+    | '/_authenticated/admin'
     | '/_authenticated/bookings'
     | '/movies/$slug'
     | '/movies/'
@@ -230,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/bookings': {
       id: '/_authenticated/bookings'
       path: '/bookings'
@@ -269,12 +288,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
   AuthenticatedBookSlugRoute: typeof AuthenticatedBookSlugRoute
   AuthenticatedTicketReferenceRoute: typeof AuthenticatedTicketReferenceRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
   AuthenticatedBookSlugRoute: AuthenticatedBookSlugRoute,
   AuthenticatedTicketReferenceRoute: AuthenticatedTicketReferenceRoute,
