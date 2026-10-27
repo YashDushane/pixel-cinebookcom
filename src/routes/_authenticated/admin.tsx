@@ -105,14 +105,14 @@ function MoviesAdmin() {
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.title.trim() || !form.genre.trim()) return toast.error("Title and genre are required");
+    if (!form.title.trim() || !form.genre.trim()) { toast.error("Title and genre are required"); return; }
     const slug = form.slug || form.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     const payload = { ...form, slug, poster_url: form.poster_url || null };
     delete payload.id;
     const { error } = form.id
       ? await supabase.from("movies").update(payload).eq("id", form.id)
       : await supabase.from("movies").insert(payload);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(form.id ? "Movie updated" : "Movie added");
     setForm(emptyMovie);
     qc.invalidateQueries({ queryKey: ["movies"] });
@@ -121,7 +121,7 @@ function MoviesAdmin() {
   const remove = async (m: Movie) => {
     if (!confirm(`Delete ${m.title}? Its shows and bookings will also be deleted.`)) return;
     const { error } = await supabase.from("movies").delete().eq("id", m.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Movie deleted");
     qc.invalidateQueries({ queryKey: ["movies"] });
   };
@@ -176,22 +176,22 @@ function TheatresAdmin() {
 
   const add = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return toast.error("Theatre name is required");
+    if (!name.trim()) { toast.error("Theatre name is required"); return; }
     const { error } = await supabase.from("theatres").insert({ name: name.trim(), location: location.trim() });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setName(""); setLocation(""); toast.success("Theatre added"); refresh();
   };
   const rename = async (id: string, old: string) => {
     const n = prompt("New theatre name", old);
     if (!n?.trim()) return;
     const { error } = await supabase.from("theatres").update({ name: n.trim() }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
   const remove = async (id: string) => {
     if (!confirm("Delete this theatre and all its shows?")) return;
     const { error } = await supabase.from("theatres").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
 
@@ -227,23 +227,23 @@ function ShowsAdmin() {
 
   const add = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.movie_id || !form.theatre_id || !form.show_date || !form.show_time) return toast.error("Fill in all show fields");
-    if (form.price < 1) return toast.error("Price must be positive");
+    if (!form.movie_id || !form.theatre_id || !form.show_date || !form.show_time) { toast.error("Fill in all show fields"); return; }
+    if (form.price < 1) { toast.error("Price must be positive"); return; }
     const { error } = await supabase.from("shows").insert(form);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Show added"); refresh();
   };
   const setPrice = async (id: string, old: number) => {
     const p = Number(prompt("New ticket price (₹)", String(old)));
     if (!p || p < 1) return;
     const { error } = await supabase.from("shows").update({ price: p }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
   const remove = async (id: string) => {
     if (!confirm("Delete this show? Bookings for it are removed too.")) return;
     const { error } = await supabase.from("shows").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
 

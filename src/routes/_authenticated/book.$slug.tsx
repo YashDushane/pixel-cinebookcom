@@ -45,7 +45,7 @@ function BookPage() {
   const show = shows.find((s) => s.id === showId);
 
   useEffect(() => { if (!theatreId && theatres[0]) setTheatreId(theatres[0].id); }, [theatres, theatreId]);
-  useEffect(() => { if (dates.length && !dates.includes(date)) setDate(dates[0]); }, [dates, date]);
+  useEffect(() => { if (dates.length && !dates.includes(date)) setDate(dates[0]!); }, [dates, date]);
   useEffect(() => { setShowId(""); setSelected([]); }, [theatreId, date]);
   useEffect(() => { setSelected([]); }, [showId]);
 
