@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MovieCard } from "@/components/MovieCard";
-import { moviesQuery } from "@/lib/queries";
+import { moviesQuery, type Movie } from "@/lib/queries";
 import hero from "@/assets/hero-cinema.jpg";
 
 export const Route = createFileRoute("/")({
@@ -60,7 +60,7 @@ function Home() {
   );
 }
 
-function MovieSection({ title, movies }: { title: string; movies: ReturnType<typeof useSuspenseQuery<typeof moviesQuery>>["data"] }) {
+function MovieSection({ title, movies }: { title: string; movies: Movie[] }) {
   return (
     <section>
       <h2 className="mb-6 border-l-4 border-primary pl-3 text-4xl">{title}</h2>

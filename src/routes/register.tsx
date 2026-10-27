@@ -51,7 +51,7 @@ function Register() {
       options: { emailRedirectTo: window.location.origin, data: { full_name: parsed.data.fullName } },
     });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     if (data.session) toast.success("Account created!");
     else setSent(true);
   };

@@ -44,7 +44,7 @@ function Login() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword(parsed.data);
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Welcome back!");
     // only allow same-site paths
     const to = redirect && redirect.startsWith("/") && !redirect.startsWith("//") ? redirect : "/movies";
@@ -57,12 +57,12 @@ function Login() {
         <div>
           <Label htmlFor="email">Email</Label>
           <Input id="email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          <FieldError msg={errors.email} />
+          <FieldError msg={errors["email"]} />
         </div>
         <div>
           <Label htmlFor="password">Password</Label>
           <Input id="password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-          <FieldError msg={errors.password} />
+          <FieldError msg={errors["password"]} />
         </div>
         <Button type="submit" className="w-full" disabled={loading}>{loading ? "Logging in…" : "Login"}</Button>
       </form>

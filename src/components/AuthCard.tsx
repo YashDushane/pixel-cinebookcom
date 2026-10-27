@@ -13,6 +13,6 @@ export function AuthCard({ title, children }: { title: string; children: ReactNo
   );
 }
 
-export function FieldError({ msg }: { msg?: string }) {
+export function FieldError({ msg }: { msg?: string | undefined }) {
   return msg ? <p className="mt-1 text-sm text-destructive">{msg}</p> : null;
 }
