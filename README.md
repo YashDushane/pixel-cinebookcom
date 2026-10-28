@@ -95,48 +95,7 @@ IMovieProjectYash/
 - `requirements.txt`: Lists the Python packages required to run the application.
 - `.gitignore`: Specifies files that should not be tracked by Git.
 
-## 6. Installation and Setup
 
-### Prerequisites
-
-Before running the project, install Python 3 and a code editor such as Visual Studio Code.
-
-### Step 1: Clone the Repository
-
-```bash
-git clone https://github.com/YashDushane/IMovieProjectYash.git
-```
-
-### Step 2: Open the Project Folder
-
-```bash
-cd IMovieProjectYash
-```
-
-### Step 3: Install Dependencies
-
-Create a `requirements.txt` file containing:
-
-```text
-Flask
-gunicorn
-```
-
-Then run:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### Step 4: Run the Application
-
-```bash
-python app.py
-```
-
-Open the local address displayed in the terminal. The current application is configured to run at:
-
-`http://127.0.0.1:5001`
 
 ## 7. How the Website Works
 
